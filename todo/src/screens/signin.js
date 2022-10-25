@@ -63,6 +63,7 @@ const navigate = useNavigate();
 signUpUser({ email , password , userName: "alish", contact:"1234"})
 .then((success) => {
   console.log(success);
+  navigate('/login');
   })
   .catch((error) => {
  console.log(error);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -60,6 +60,7 @@ const navigate = useNavigate();
 loginUser ({email, password})
 .then((success) => {
   console.log(success);
+  navigate('/todo');
   })
   .catch((error) => {
  console.log(error);

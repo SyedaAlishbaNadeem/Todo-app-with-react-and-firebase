@@ -103,7 +103,6 @@ let loginUser = (obj) => {
 //send to do values to the firebase ......................
 
 let sendTodos =(obj)=>{
-
   const postListRef = ref(database, 'todos/');
   const newPostRef = push(postListRef);
   set(newPostRef, obj );

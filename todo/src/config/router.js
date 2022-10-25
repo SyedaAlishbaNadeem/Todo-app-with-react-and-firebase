@@ -19,16 +19,15 @@ import Notes from '../screens/notes';
 
 
 
+
 export default function AppRouter() {
   return (
     <div>
         
         <Router>
 
-<Link to='login'> Log in </Link>
-<br/>
-<Link to='signin'> Sign in </Link>
-<br/>
+<Link to='login'>   Log in  </Link>
+<Link to='signin'> Sign in   </Link>
 <Link to='todo'> Todo app </Link>
 {/* <Link to='notes'> notes  </Link> */}
 
