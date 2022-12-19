@@ -10,6 +10,7 @@ import { getDatabase,ref, push, set, onValue } from "firebase/database";
 
 
 
+
 const auth = getAuth(app);
 const database = getDatabase(app);
 
@@ -18,15 +19,23 @@ let signUpUser = (obj) => {
   let { email, password, contact, userName } = obj;
 
   return new Promise((resolve, reject) => {
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password, userName, contact)
       .then((userCredential) => {
         //if user get authenticate anf registered in firebase it will go in success
         const user = userCredential.user;
         // with ref we are making refrence
         const reference = ref(database, `users/${user.uid}`);
+        // obj.id = user.uid;
 
         // with set with are sending things to data base and check with resolve that either data went there or not
-        set(reference, obj)
+        set(reference, {
+email: email,
+ password: password,
+ userName : userName,
+ uid: user.uid,
+        }
+          
+          )
           .then(() => {
             resolve("user created successfully and send to database");
           })
@@ -60,10 +69,10 @@ let signUpUser = (obj) => {
 
 
 let loginUser = (obj) => {
-  let { email, password } = obj;
+  let { email, password, userName, contact } = obj;
 
   return new Promise ((resolve, reject) => {
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password, userName, contact)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -102,13 +111,23 @@ let loginUser = (obj) => {
 
 //send to do values to the firebase ......................
 
-let sendTodos =(obj)=>{
-  const postListRef = ref(database, 'todos/');
+let sendTodos =(obj, uid)=>{
+  const postListRef = ref(database, `todos/${uid}` );
   const newPostRef = push(postListRef);
   set(newPostRef, obj );
 
 }
 
+
+// let getData= () => {
+//   const db = getDatabase();
+//   const starCountRef = ref(db, 'students/');
+//   onValue(starCountRef, (snapshot) => {
+//     const data = snapshot.val();
+// console.log(data);
+//   });
+
+// }
 
 
 
@@ -120,3 +139,4 @@ let sendTodos =(obj)=>{
 export { signUpUser, loginUser , sendTodos};
 
 
+ 

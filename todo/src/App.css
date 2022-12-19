@@ -73,9 +73,19 @@ list-style: none;
 
 
 
+.links{
+  text-decoration: none;
+  margin: 20px;
+  padding: 7px;
+  background-color: blueviolet;
+  border-radius: 10px;
+ color:white;
+}
 
-
-
+.links:hover {
+color:white;
+background: #000;
+}
 
 
 

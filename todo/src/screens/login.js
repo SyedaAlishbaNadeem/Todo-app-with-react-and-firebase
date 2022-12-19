@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loginUser, signUpUser } from '../config/firebasemethods';
 import { useState } from 'react';
+import { CircularProgress } from '@mui/material';
 
 
 
@@ -52,24 +53,31 @@ const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isLoading, setLoader] = useState(false)
+// let [list, setList] = useState([]);
   
 
   let login = ()=>{
-
+setLoader(true);
 loginUser ({email, password})
 .then((success) => {
+  setLoader(false);
   console.log(success);
-  navigate('/todo');
+
+  //sending data to the todo page with object info
+  navigate('/todo', {
+    state : success
+  });
+
+
   })
   .catch((error) => {
+    setLoader(false);
  console.log(error);
     // ..
   });
 
-
   }
-
 
 
 
@@ -133,19 +141,35 @@ loginUser ({email, password})
                 autoComplete="current-password"
                 onChange = {(e)=> setPassword (e.target.value)}
               />
-              {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
-              <Button
+
+
+              {/* <button
+              className=" btn btn-primary"
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled = {isLoading}
                 onClick = {login}
               >
-              Log In
-              </Button>
+              </button> */}
+              
+ { isLoading ? <CircularProgress/>:
+ <button
+              className=" btn btn-primary"
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                disabled = {isLoading}
+                onClick = {login}
+              >
+                Login
+              </button> }
+
+
+
+
 
               <Button
                 type="submit"
